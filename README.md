@@ -3,6 +3,7 @@
 ## useful websites
 ### Android Fundamentals (http://developer.android.com/guide/components/fundamentals.html)
 ### SMS Manager in Android (http://developer.android.com/reference/android/telephony/SmsManager.html)
+### Android App Tutorial (https://www.coursera.org/courses?query=android%20app&languages=en)
 #### looks like we can use this method to send text 
 ##### void sendTextMessage(String destinationAddress, String scAddress, String text, PendingIntent sentIntent, PendingIntent deliveryIntent)
 ##### // Send a text based SMS.
