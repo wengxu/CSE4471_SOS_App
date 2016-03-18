@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SOS_OSU</string>
+    <string name="sos">SOS</string>
+    <string name="action_settings">Settings</string>
+</resources>
