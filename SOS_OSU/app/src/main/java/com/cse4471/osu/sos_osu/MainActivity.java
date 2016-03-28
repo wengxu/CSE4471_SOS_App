@@ -18,9 +18,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         final Button sos= (Button)findViewById(R.id.button);
-        final CountDownTimer timer= new CountDownTimer(5000, 1000) {
+        final CountDownTimer timer= new CountDownTimer(5000, 100) {
             public void onTick(long millisUntilFinished) {
-                sos.setText("" + (millisUntilFinished / 1000));
+                sos.setText("" + Math.round(millisUntilFinished/ 1000.0) );
+                //sos.setText("" + millisUntilFinished );
             }
             public void onFinish() {
                 sos.setText("finish");
