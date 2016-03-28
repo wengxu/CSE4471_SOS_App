@@ -15,8 +15,8 @@
             <solid android:color="#fa090d"/>
             <gradient android:angle="90"
                 android:startColor="#ca0003"
-                android:centerColor="#840005"
-                android:endColor="#ca0003"/>
+                android:centerColor="#b71c1c"
+                android:endColor="#840005"/>
         </shape>
 
     </item>

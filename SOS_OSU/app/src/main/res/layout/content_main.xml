@@ -18,13 +18,29 @@
         android:text="@string/sos"
         android:textColor="#f2eeee"
         android:textSize="100dp"
-        android:id="@+id/button"
+        android:id="@+id/redbutton"
         android:background="@drawable/redbutton"
+
+        android:visibility="visible"
 
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="64dp" />
 
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:text="@string/sos"
+        android:textColor="#f2eeee"
+        android:textSize="50dp"
+        android:id="@+id/greenbutton"
+        android:background="@drawable/greenbutton"
+
+        android:visibility="gone"
+
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp" />
 
 
 
