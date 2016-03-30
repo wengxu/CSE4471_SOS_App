@@ -1,5 +1,6 @@
 package com.cse4471.osu.sos_osu;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
@@ -99,8 +100,16 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case R.id.contact:
+                Intent contactIntent = new Intent(getApplicationContext(), DisplayContactActivity.class);
+                startActivity(contactIntent);
+                return true;
+            default:
+                break;
         }
 
         return super.onOptionsItemSelected(item);
