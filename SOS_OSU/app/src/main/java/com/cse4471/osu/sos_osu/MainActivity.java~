@@ -33,20 +33,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-<<<<<<< HEAD
+
         final Button sos = (Button) findViewById(R.id.redbutton);
         final Button finish = (Button) findViewById(R.id.greenbutton);
 
         final CountDownTimer timer = new CountDownTimer(5999, 100) {
             public void onTick(long millisUntilFinished) {
                 sos.setText("" + ((int) (millisUntilFinished) / 1000));
+
+<<<<<<< HEAD
+
 =======
-        final Button sos= (Button)findViewById(R.id.button);
-        final CountDownTimer timer= new CountDownTimer(5000, 100) {
-            public void onTick(long millisUntilFinished) {
-                sos.setText("" + Math.round(millisUntilFinished/ 1000.0) );
-                //sos.setText("" + millisUntilFinished );
->>>>>>> master
+>>>>>>> march29_02
             }
 
             public void onFinish() {
