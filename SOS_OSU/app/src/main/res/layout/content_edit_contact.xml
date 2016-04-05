@@ -25,22 +25,28 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Last Name"
-        android:ems="10"
-        android:id="@+id/lastNameEditText"
-        android:layout_below="@+id/firstNameEditText"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="51dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:inputType="phone"
         android:ems="10"
         android:id="@+id/phoneEditText"
-        android:layout_below="@+id/lastNameEditText"
         android:layout_alignParentStart="true"
         android:layout_marginTop="49dp"
-        android:text="Phone" />
+        android:text="Phone"
+        android:layout_below="@+id/firstNameEditText" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/cancelButton"
+        android:layout_marginTop="55dp"
+        android:layout_below="@+id/deleteButton"
+        android:layout_alignStart="@+id/deleteButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:id="@+id/deleteButton"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

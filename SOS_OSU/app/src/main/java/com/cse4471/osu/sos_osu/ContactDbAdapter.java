@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.security.Key;
 import java.sql.RowId;
 import java.sql.SQLException;
 
@@ -97,6 +98,10 @@ public class ContactDbAdapter {
         return mDb.delete(CONTACT_TABLE, KEY_ROWID + "=?", selectionArgs) > 0;
     }
 
+    public Cursor getContactById(int id) {
+        return mDb.query(CONTACT_TABLE, CONTACT_FIELDS, KEY_ROWID + "=?",new String[] { String.valueOf(id) }, null, null, null);
+    }
+    
     public Cursor getContacts() {
         return mDb.query(CONTACT_TABLE, CONTACT_FIELDS, null, null, null, null, null);
     }

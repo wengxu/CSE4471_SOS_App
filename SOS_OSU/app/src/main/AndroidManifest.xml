@@ -3,6 +3,7 @@
     package="com.cse4471.osu.sos_osu">
 
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -38,6 +39,7 @@
             android:label="@string/title_activity_edit_contact"
             android:parentActivityName=".DisplayContactActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
     </application>
 
 </manifest>

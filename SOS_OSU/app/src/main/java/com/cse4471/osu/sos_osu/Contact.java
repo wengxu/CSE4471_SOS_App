@@ -1,5 +1,7 @@
 package com.cse4471.osu.sos_osu;
 
+import android.content.ContentValues;
+
 import java.util.ArrayList;
 
 /**
@@ -20,6 +22,14 @@ public class Contact {
         this.mFirstName = firstName;
         this.mLastName = lastName;
         this.mPhoneNum = phoneNum;
+    }
+
+    public ContentValues getContentValues() {
+        ContentValues newValue = new ContentValues();
+        newValue.put(ContactDbAdapter.FIRST_NAME, mFirstName);
+        newValue.put(ContactDbAdapter.LAST_NAME, mLastName);
+        newValue.put(ContactDbAdapter.PHONE_NUM, mPhoneNum);
+        return newValue;
     }
 
     public static ArrayList<Contact> generateFakeContacts() {
