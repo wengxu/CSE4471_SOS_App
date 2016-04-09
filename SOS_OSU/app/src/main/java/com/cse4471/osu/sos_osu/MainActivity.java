@@ -108,12 +108,14 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
 
         switch (id) {
-            case R.id.action_settings:
-                return true;
+
             case R.id.contact:
                 Intent contactIntent = new Intent(getApplicationContext(), DisplayContactActivity.class);
                 startActivity(contactIntent);
                 return true;
+            case R.id.message:
+                Intent messageIntent = new Intent(getApplicationContext(), DisplayMessageActivity.class);
+                startActivity(messageIntent);
             default:
                 break;
         }

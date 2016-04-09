@@ -8,4 +8,5 @@
     <string name="add_contact">Add</string>
     <string name="save_contact">Save</string>
     <string name="title_activity_edit_contact">Edit Contact</string>
+    <string name="title_activity_display_message">Message</string>
 </resources>

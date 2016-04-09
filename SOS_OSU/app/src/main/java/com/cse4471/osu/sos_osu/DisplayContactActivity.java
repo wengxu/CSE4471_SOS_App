@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -96,6 +97,12 @@ public class DisplayContactActivity extends AppCompatActivity {
     }
 
     @Override
+    public  void onResume() {
+        super.onResume();
+        refreshView();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_display_contact, menu);
@@ -112,8 +119,7 @@ public class DisplayContactActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
 
         switch (id) {
-            case R.id.action_settings:
-                return true;
+
             case R.id.add_contact:
                 /*
                 Intent editContactIntent = new Intent(getApplicationContext(), EditContactActivity.class);
@@ -132,6 +138,7 @@ public class DisplayContactActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // process data from contact picker
     @Override
     public void onActivityResult(int reqCode, int resultCode, Intent backIntent) {
         super.onActivityResult(reqCode, resultCode, backIntent);
@@ -156,21 +163,28 @@ public class DisplayContactActivity extends AppCompatActivity {
                             Log.d(pickCursor.getColumnName(i), "         " + pickCursor.getString(i));
                         }
                         */
+                        // update view
+                        //refreshView();
+                        // display data added message
+                        Toast.makeText(getApplicationContext(), newContact.mFirstName +  " added to contact", Toast.LENGTH_SHORT).show();
 
-                        adapter.notifyDataSetChanged();
-                        cursor = contactDbAdapter.getContacts();
-                        adapter = new SimpleCursorAdapter(this,
-                                android.R.layout.simple_list_item_2,
-                                cursor,
-                                new String[] {ContactDbAdapter.FIRST_NAME, ContactDbAdapter.PHONE_NUM},
-                                new int[] {android.R.id.text1, android.R.id.text2},
-                                0);
-                        listView.setAdapter(adapter);
                     }
                     pickCursor.close();
                 }
         }
 
+    }
+
+    public void refreshView() {
+        adapter.notifyDataSetChanged();
+        cursor = contactDbAdapter.getContacts();
+        adapter = new SimpleCursorAdapter(this,
+                android.R.layout.simple_list_item_2,
+                cursor,
+                new String[] {ContactDbAdapter.FIRST_NAME, ContactDbAdapter.PHONE_NUM},
+                new int[] {android.R.id.text1, android.R.id.text2},
+                0);
+        listView.setAdapter(adapter);
     }
 
 
