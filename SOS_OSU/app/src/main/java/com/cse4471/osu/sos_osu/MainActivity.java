@@ -1,11 +1,18 @@
 package com.cse4471.osu.sos_osu;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.SmsManager;
@@ -14,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -26,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+    TextView txtLat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +42,37 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET}, 10);
+
+            return;
+        }
+        txtLat = (TextView) findViewById(R.id.textview1);
+        // Acquire a reference to the system Location Manager
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                // Called when a new location is found by the network location provider.
+                txtLat.setText("Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            public void onProviderEnabled(String provider) {
+            }
+
+            public void onProviderDisabled(String provider) {
+            }
+        };
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
+        Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        if(loc != null) {
+            txtLat.setText("Latitude:" + loc.getLatitude() + ", Longitude:" + loc.getLongitude());
+        }
 
         final Button sos = (Button) findViewById(R.id.redbutton);
         final Button finish = (Button) findViewById(R.id.greenbutton);
@@ -40,11 +80,6 @@ public class MainActivity extends AppCompatActivity {
         final CountDownTimer timer = new CountDownTimer(5999, 100) {
             public void onTick(long millisUntilFinished) {
                 sos.setText("" + ((int) (millisUntilFinished) / 1000));
-
-
-
-
-
             }
 
             public void onFinish() {

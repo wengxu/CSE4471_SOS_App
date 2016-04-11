@@ -43,5 +43,15 @@
         android:layout_marginTop="64dp" />
 
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textview1"
+        android:layout_marginTop="52dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>
