@@ -111,6 +111,12 @@ public class ContactDbAdapter {
         return  cursor.getCount();
     }
 
+    // insert with encodeing
+    public  long insertContactWithEncoding(ContentValues initialValues) {
+        return mDb.insertWithOnConflict(CONTACT_TABLE, null, initialValues, SQLiteDatabase.CONFLICT_IGNORE);
+    }
+
+
     public  static Contact getContactFromCursor(Cursor cursor) {
         Contact contact = new Contact();
         contact.mFirstName = cursor.getString(cursor.getColumnIndex(FIRST_NAME));

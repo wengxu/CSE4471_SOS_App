@@ -2,6 +2,7 @@ package com.cse4471.osu.sos_osu;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,15 +10,19 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import java.sql.SQLException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +31,14 @@ public class MainActivity extends AppCompatActivity {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+    EditText messageText;
+    Cursor cursor;
+    UserDbAdapter userDbAdapter;
+
+    @Override
+    public int checkUriPermission(Uri uri, int pid, int uid, int modeFlags) {
+        return super.checkUriPermission(uri, pid, uid, modeFlags);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +49,19 @@ public class MainActivity extends AppCompatActivity {
 
         final Button sos = (Button) findViewById(R.id.redbutton);
         final Button finish = (Button) findViewById(R.id.greenbutton);
+        messageText = (EditText) findViewById(R.id.messageText);
+
+        userDbAdapter = new UserDbAdapter(this);
+
+        try {
+            userDbAdapter.open();
+        } catch (SQLException error) {
+            Log.e("mytag", "Error open userDbAdapter");
+        }
 
         final CountDownTimer timer = new CountDownTimer(5999, 100) {
             public void onTick(long millisUntilFinished) {
                 sos.setText("" + ((int) (millisUntilFinished) / 1000));
-
-
 
 
 
@@ -144,6 +164,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public  void onResume() {
+        super.onResume();
+        // refresh user message
+        cursor = userDbAdapter.getUsers();
+        if (cursor.moveToFirst()) {
+            messageText.setText(cursor.getString(cursor.getColumnIndex(userDbAdapter.MESSAGE)));
+        }
+
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
 
@@ -161,5 +192,13 @@ public class MainActivity extends AppCompatActivity {
         );
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (cursor != null) {
+            cursor.close();
+        }
     }
 }

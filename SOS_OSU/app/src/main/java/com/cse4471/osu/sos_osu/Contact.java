@@ -32,6 +32,15 @@ public class Contact {
         return newValue;
     }
 
+    public ContentValues getContentValuesWithEncoding() {
+        ContentValues newValue = new ContentValues();
+        newValue.put(ContactDbAdapter.FIRST_NAME, mFirstName);
+        newValue.put(ContactDbAdapter.LAST_NAME, mLastName);
+        newValue.put(ContactDbAdapter.PHONE_NUM, mPhoneNum);
+        return newValue;
+    }
+
+
     public static ArrayList<Contact> generateFakeContacts() {
         ArrayList<Contact> contacts = new ArrayList<Contact>();
         for (int i = 0; i < 10; i++) {
