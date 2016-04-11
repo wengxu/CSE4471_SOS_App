@@ -27,7 +27,6 @@ import java.sql.SQLException;
 public class MainActivity extends AppCompatActivity {
 
     ContactDbAdapter contactDbAdapter;
-    Cursor cursor;
 
     private GoogleApiClient client;
     EditText messageText;
