@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     private GoogleApiClient client;
     EditText messageText;
-    Cursor cursor;
     UserDbAdapter userDbAdapter;
 
     @Override

@@ -18,6 +18,8 @@ import java.sql.SQLException;
 public class EditContactActivity extends AppCompatActivity {
     ContactDbAdapter contactDbAdapter;
     Cursor cursor;
+    String phoneNum;
+    String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +29,11 @@ public class EditContactActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        EditText firstNameEditText = (EditText) findViewById(R.id.firstNameEditText);
-        EditText phoneEditText = (EditText) findViewById(R.id.phoneEditText);
+        final EditText firstNameEditText = (EditText) findViewById(R.id.firstNameEditText);
+        final EditText phoneEditText = (EditText) findViewById(R.id.phoneEditText);
         Button deleteButton = (Button) findViewById(R.id.deleteButton);
         Button cancelButton = (Button) findViewById(R.id.cancelButton);
+        Button saveButton = (Button) findViewById(R.id.saveButton);
 
 
         contactDbAdapter =  new ContactDbAdapter(this);
@@ -48,6 +51,7 @@ public class EditContactActivity extends AppCompatActivity {
         // get the id of contact in database
         final int id = cursor.getInt(cursor.getColumnIndex(contactDbAdapter.KEY_ROWID));
 
+
         //Log.d("id", String.valueOf(id));
         // set title based on if adding a new contact or edit existing contact
 
@@ -56,8 +60,10 @@ public class EditContactActivity extends AppCompatActivity {
             // get data from database
             cursor = contactDbAdapter.getContactById(id);
             if (cursor.moveToFirst()) {
-                firstNameEditText.setText(cursor.getString(cursor.getColumnIndex(contactDbAdapter.FIRST_NAME)));
-                phoneEditText.setText(cursor.getString(cursor.getColumnIndex(contactDbAdapter.PHONE_NUM)));
+                name = cursor.getString(cursor.getColumnIndex(contactDbAdapter.FIRST_NAME));
+                phoneNum = cursor.getString(cursor.getColumnIndex(contactDbAdapter.PHONE_NUM));
+                firstNameEditText.setText(name);
+                phoneEditText.setText(phoneNum);
             }
             // implement delete button
             deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +87,20 @@ public class EditContactActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
+            }
+        });
+
+        // implement save button
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public  void onClick(View view) {
+                if (! (phoneNum.equals(phoneEditText.getText().toString()) && name.equals(firstNameEditText.getText().toString())) ) {
+                    Contact contact = new Contact(firstNameEditText.getText().toString(), "", phoneEditText.getText().toString());
+                    contactDbAdapter.updateContact(id, contact.getContentValues());
+                    Toast.makeText(getApplicationContext(), "Contact updated", Toast.LENGTH_SHORT).show();
+                }
+
                 finish();
             }
         });

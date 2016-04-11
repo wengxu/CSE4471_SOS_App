@@ -38,8 +38,8 @@
         android:layout_height="wrap_content"
         android:text="Cancel"
         android:id="@+id/cancelButton"
-        android:layout_marginTop="55dp"
-        android:layout_below="@+id/deleteButton"
+        android:layout_marginTop="47dp"
+        android:layout_below="@+id/saveButton"
         android:layout_alignStart="@+id/deleteButton" />
 
     <Button
@@ -47,6 +47,16 @@
         android:layout_height="wrap_content"
         android:text="Delete"
         android:id="@+id/deleteButton"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/phoneEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="61dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/saveButton"
+        android:layout_below="@+id/deleteButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="41dp" />
 </RelativeLayout>
