@@ -26,10 +26,9 @@ import java.sql.SQLException;
 
 public class MainActivity extends AppCompatActivity {
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
+    ContactDbAdapter contactDbAdapter;
+    Cursor cursor;
+
     private GoogleApiClient client;
     EditText messageText;
     Cursor cursor;
@@ -49,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Button sos = (Button) findViewById(R.id.redbutton);
         final Button finish = (Button) findViewById(R.id.greenbutton);
+
         messageText = (EditText) findViewById(R.id.messageText);
 
         userDbAdapter = new UserDbAdapter(this);
@@ -59,22 +59,37 @@ public class MainActivity extends AppCompatActivity {
             Log.e("mytag", "Error open userDbAdapter");
         }
 
+        contactDbAdapter = new ContactDbAdapter(this);
+        try {
+            contactDbAdapter.open();
+        } catch (SQLException error) {
+            Log.e("mytag", "Error open contactDbAdapter");
+        }
+        cursor = contactDbAdapter.getContacts();
+
+
+
         final CountDownTimer timer = new CountDownTimer(5999, 100) {
             public void onTick(long millisUntilFinished) {
                 sos.setText("" + ((int) (millisUntilFinished) / 1000));
 
 
 
-            }
 
+
+
+            }
             public void onFinish() {
                 sos.setVisibility(View.GONE);
                 finish.setVisibility(View.VISIBLE);
                 finish.setText("finish");
-
                 SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage("6143026390", null, "test", null, null);
-
+                if(cursor.moveToFirst()){
+                    do{
+                        String number=cursor.getString(cursor.getColumnIndex(contactDbAdapter.PHONE_NUM));
+                        smsManager.sendTextMessage(number, null, "test", null, null);
+                    }while(cursor.moveToNext());
+                }
             }
         };
 
