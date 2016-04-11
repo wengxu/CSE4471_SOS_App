@@ -1,26 +1,45 @@
 package com.cse4471.osu.sos_osu;
 
+import android.Manifest;
+import android.content.Context;
+
 import android.content.Intent;
+
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Color;
+
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+
+
 import android.support.v7.widget.Toolbar;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
 import android.view.MenuItem;
 import android.widget.EditText;
+
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+
 
 import java.sql.SQLException;
 
@@ -38,17 +57,20 @@ public class MainActivity extends AppCompatActivity {
         return super.checkUriPermission(uri, pid, uid, modeFlags);
     }
 
+    TextView txtLat;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final Button sos = (Button) findViewById(R.id.redbutton);
-        final Button finish = (Button) findViewById(R.id.greenbutton);
 
-        messageText = (EditText) findViewById(R.id.messageText);
+
 
         userDbAdapter = new UserDbAdapter(this);
 
@@ -57,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (SQLException error) {
             Log.e("mytag", "Error open userDbAdapter");
         }
+
 
         contactDbAdapter = new ContactDbAdapter(this);
         try {
@@ -67,16 +90,12 @@ public class MainActivity extends AppCompatActivity {
         cursor = contactDbAdapter.getContacts();
 
 
+        final Button sos = (Button) findViewById(R.id.redbutton);
+        final Button finish = (Button) findViewById(R.id.greenbutton);
 
         final CountDownTimer timer = new CountDownTimer(5999, 100) {
             public void onTick(long millisUntilFinished) {
                 sos.setText("" + ((int) (millisUntilFinished) / 1000));
-
-
-
-
-
-
             }
             public void onFinish() {
                 sos.setVisibility(View.GONE);
@@ -120,10 +139,9 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -131,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -156,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void onStart() {
@@ -185,6 +205,37 @@ public class MainActivity extends AppCompatActivity {
         if (cursor.moveToFirst()) {
             messageText.setText(cursor.getString(cursor.getColumnIndex(userDbAdapter.MESSAGE)));
         }
+        // Acquire a reference to the system Location Manager
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET}, 10);
+            return;
+        }
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                // Called when a new location is found by the network location provider.
+                messageText.setText(messageText.getText()+"Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            public void onProviderEnabled(String provider) {
+            }
+
+            public void onProviderDisabled(String provider) {
+            }
+        };
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
+        Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        if(loc != null) {
+            txtLat.setText("Latitude:" + loc.getLatitude() + ", Longitude:" + loc.getLongitude());
+        }
+
 
     }
 
@@ -215,4 +266,5 @@ public class MainActivity extends AppCompatActivity {
             cursor.close();
         }
     }
+
 }

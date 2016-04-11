@@ -42,13 +42,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="64dp" />
 
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/messageText"
-        android:layout_below="@+id/redbutton"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp" />
+        android:layout_marginBottom="55dp" />
+
 
 
 </RelativeLayout>
