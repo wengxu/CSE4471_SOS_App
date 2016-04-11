@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private GoogleApiClient client;
     EditText messageText;
     UserDbAdapter userDbAdapter;
+    Cursor cursor;
 
     @Override
     public int checkUriPermission(Uri uri, int pid, int uid, int modeFlags) {
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         userDbAdapter = new UserDbAdapter(this);
+        messageText = (EditText) findViewById(R.id.messageText);
 
         try {
             userDbAdapter.open();
