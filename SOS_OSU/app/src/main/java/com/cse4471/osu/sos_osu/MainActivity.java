@@ -2,6 +2,7 @@ package com.cse4471.osu.sos_osu;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -19,12 +21,13 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.sql.SQLException;
+
 public class MainActivity extends AppCompatActivity {
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
+    ContactDbAdapter contactDbAdapter;
+    Cursor cursor;
+
     private GoogleApiClient client;
 
     @Override
@@ -36,25 +39,30 @@ public class MainActivity extends AppCompatActivity {
 
         final Button sos = (Button) findViewById(R.id.redbutton);
         final Button finish = (Button) findViewById(R.id.greenbutton);
+        contactDbAdapter = new ContactDbAdapter(this);
+        try {
+            contactDbAdapter.open();
+        } catch (SQLException error) {
+            Log.e("mytag", "Error open contactDbAdapter");
+        }
+        cursor = contactDbAdapter.getContacts();
+
 
         final CountDownTimer timer = new CountDownTimer(5999, 100) {
             public void onTick(long millisUntilFinished) {
                 sos.setText("" + ((int) (millisUntilFinished) / 1000));
-
-
-
-
-
             }
-
             public void onFinish() {
                 sos.setVisibility(View.GONE);
                 finish.setVisibility(View.VISIBLE);
                 finish.setText("finish");
-
                 SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage("6143026390", null, "test", null, null);
-
+                if(cursor.moveToFirst()){
+                    do{
+                        String number=cursor.getString(cursor.getColumnIndex(contactDbAdapter.PHONE_NUM));
+                        smsManager.sendTextMessage(number, null, "test", null, null);
+                    }while(cursor.moveToNext());
+                }
             }
         };
 
