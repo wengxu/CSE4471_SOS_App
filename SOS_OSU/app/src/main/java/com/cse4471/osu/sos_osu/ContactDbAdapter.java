@@ -125,5 +125,32 @@ public class ContactDbAdapter {
         return contact;
     }
 
+    public ContentValues encodeContentValues(ContentValues contentValues, int key) {
+        ContentValues encodedContentValues = new ContentValues();
+
+        return encodedContentValues;
+    }
+
+    // this function shifts the char by
+    public char shiftedChar(char c, int shift) {
+        // check char Ansi
+        int ansi = (int) c;
+        char result = c;
+        // if numbers
+        if (ansi >= 48 && ansi <= 59) {
+
+        }
+        // if A-Z
+        else if (ansi >= 65 && ansi <= 90) {
+
+        }
+        // if a-z
+        else if (ansi >= 97 && ansi <= 122) {
+
+        }
+
+        return result;
+    }
+
 
 }

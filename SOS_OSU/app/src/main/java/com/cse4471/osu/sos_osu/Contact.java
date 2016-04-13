@@ -43,7 +43,7 @@ public class Contact {
 
     public static ArrayList<Contact> generateFakeContacts() {
         ArrayList<Contact> contacts = new ArrayList<Contact>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 3; i++) {
             contacts.add(new Contact("First Name " + i, "Last Name " + i, "123456789" + i));
         }
         return contacts;

@@ -44,7 +44,7 @@ public class DisplayContactActivity extends AppCompatActivity {
         try {
             contactDbAdapter.open();
         } catch (SQLException error) {
-            Log.e("mytag", "Error open contactDbAdapter");
+            Log.e("mytag", "Error open contactDbAdapter: " + error.toString());
         }
 
         // insert fake data if no data is in the database
@@ -131,6 +131,10 @@ public class DisplayContactActivity extends AppCompatActivity {
                 pickContactIntent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
                 startActivityForResult(pickContactIntent, PICK_CONTACT);
                 return true;
+            case R.id.add_custom_contact:
+                Intent createCustomContactIntent = new Intent(getApplicationContext(), EditContactActivity.class);
+                createCustomContactIntent.putExtra("edit/add", "add");
+                startActivity(createCustomContactIntent);
             default:
                 break;
         }

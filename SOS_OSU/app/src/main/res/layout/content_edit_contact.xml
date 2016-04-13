@@ -38,9 +38,10 @@
         android:layout_height="wrap_content"
         android:text="Cancel"
         android:id="@+id/cancelButton"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="41dp"
         android:layout_below="@+id/saveButton"
-        android:layout_alignStart="@+id/deleteButton" />
+        android:layout_centerHorizontal="true"
+         />
 
     <Button
         android:layout_width="wrap_content"

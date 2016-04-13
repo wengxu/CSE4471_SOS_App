@@ -1,7 +1,11 @@
 package com.cse4471.osu.sos_osu;
 
+import android.app.Notification;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -82,6 +86,23 @@ public class DisplayMessageActivity extends AppCompatActivity {
                 finish();
             }
         });
+        // set overflow button on action bar
+        /*
+        Canvas canvas = new Canvas();
+        Paint paint = new Paint();
+        paint.setColor(Color.WHITE);
+        paint.setStyle(Paint.Style.FILL);
+        canvas.drawPaint(paint);
+
+        paint.setColor(Color.BLACK);
+        paint.setTextSize(20);
+        canvas.drawText("Some Text", 10, 25, paint);
+        //toolbar.getOverflowIcon().draw();
+        */
+        //Log.d("test ", String.valueOf((int) 'a'));
+
+
+
 
     }
 

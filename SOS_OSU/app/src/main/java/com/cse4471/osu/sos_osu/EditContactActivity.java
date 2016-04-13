@@ -40,21 +40,22 @@ public class EditContactActivity extends AppCompatActivity {
         try {
             contactDbAdapter.open();
         } catch (SQLException error) {
-            Log.e("mytag", "Error open contactDbAdapter");
+            Log.e("mytag", "Error open contactDbAdapter: "+ error.toString());
         }
 
         Intent intent = getIntent();
-        String editORadd = intent.getStringExtra("edit/add");
+        final String editORadd = intent.getStringExtra("edit/add");
         int position = intent.getIntExtra("position", 0) ;
         cursor = contactDbAdapter.getContacts();
         cursor.moveToPosition(position);
         // get the id of contact in database
         final int id = cursor.getInt(cursor.getColumnIndex(contactDbAdapter.KEY_ROWID));
 
+        name = "";
+        phoneNum = "";
 
-        //Log.d("id", String.valueOf(id));
         // set title based on if adding a new contact or edit existing contact
-
+        // if it's edit existing contact
         if (editORadd.equals("edit")) {
             getSupportActionBar().setTitle("Edit Contact");
             // get data from database
@@ -76,11 +77,41 @@ public class EditContactActivity extends AppCompatActivity {
                 }
             });
 
+            // implement save button
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public  void onClick(View view) {
+                    if (! (phoneNum.equals(phoneEditText.getText().toString()) && name.equals(firstNameEditText.getText().toString())) ) {
+                        Contact contact = new Contact(firstNameEditText.getText().toString(), "", phoneEditText.getText().toString());
+                        contactDbAdapter.updateContact(id, contact.getContentValues());
+                        Toast.makeText(getApplicationContext(), "Contact Updated", Toast.LENGTH_SHORT).show();
+                    }
+
+                    finish();
+                }
+            });
+
 
         }
+        // if it's adding new contact
         else if (editORadd.equals("add")) {
             getSupportActionBar().setTitle("Add Contact");
+            // hide delete button
+            deleteButton.setVisibility(View.GONE);
+            firstNameEditText.setText("Name");
+            // implement save button
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!(phoneNum.equals(phoneEditText.getText().toString()) && name.equals(firstNameEditText.getText().toString()))) {
+                        Contact contact = new Contact(firstNameEditText.getText().toString(), "", phoneEditText.getText().toString());
+                        contactDbAdapter.insertContact(contact.getContentValues());
+                        Toast.makeText(getApplicationContext(), "Contact Added", Toast.LENGTH_SHORT).show();
+                    }
 
+                    finish();
+                }
+            });
         }
 
         // implement cancel button
@@ -91,19 +122,7 @@ public class EditContactActivity extends AppCompatActivity {
             }
         });
 
-        // implement save button
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public  void onClick(View view) {
-                if (! (phoneNum.equals(phoneEditText.getText().toString()) && name.equals(firstNameEditText.getText().toString())) ) {
-                    Contact contact = new Contact(firstNameEditText.getText().toString(), "", phoneEditText.getText().toString());
-                    contactDbAdapter.updateContact(id, contact.getContentValues());
-                    Toast.makeText(getApplicationContext(), "Contact updated", Toast.LENGTH_SHORT).show();
-                }
 
-                finish();
-            }
-        });
 
 
     }

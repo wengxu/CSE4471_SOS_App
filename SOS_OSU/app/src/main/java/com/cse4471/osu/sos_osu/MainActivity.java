@@ -51,13 +51,14 @@ public class MainActivity extends AppCompatActivity {
     EditText messageText;
     UserDbAdapter userDbAdapter;
     Cursor cursor;
+    TextView locationText;
 
     @Override
     public int checkUriPermission(Uri uri, int pid, int uid, int modeFlags) {
         return super.checkUriPermission(uri, pid, uid, modeFlags);
     }
 
-    TextView txtLat;
+
 
 
 
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         userDbAdapter = new UserDbAdapter(this);
         messageText = (EditText) findViewById(R.id.messageText);
+        locationText = (TextView) findViewById(R.id.locationTextView);
 
         try {
             userDbAdapter.open();
@@ -139,6 +141,10 @@ public class MainActivity extends AppCompatActivity {
 
                 }
         );
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
 
     }
@@ -217,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 // Called when a new location is found by the network location provider.
-                messageText.setText(messageText.getText()+"Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
+                locationText.setText("Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -230,11 +236,12 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 0, locationListener);
         Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         if(loc != null) {
-            txtLat.setText("Latitude:" + loc.getLatitude() + ", Longitude:" + loc.getLongitude());
+            // messageText.setText("Latitude:" + loc.getLatitude() + ", Longitude:" + loc.getLongitude());
+            locationText.setText("Latitude:" + loc.getLatitude() + ", Longitude:" + loc.getLongitude());
         }
 
 

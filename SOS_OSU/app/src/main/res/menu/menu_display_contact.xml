@@ -7,5 +7,10 @@
         android:id="@+id/add_contact"
         android:orderInCategory="100"
         android:title="@string/add_contact"
-        app:showAsAction="always" />
+         />
+    <item
+        android:id="@+id/add_custom_contact"
+        android:orderInCategory="100"
+        android:title="@string/add_custom_contact"
+         />
 </menu>
