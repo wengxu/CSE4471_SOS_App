@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/messageText"
         android:text="dddd"
-        android:layout_below="@+id/redbutton"
+        android:layout_above="@+id/locationTextView"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -57,8 +57,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="This is medium Text"
         android:id="@+id/locationTextView"
-        android:layout_below="@+id/messageText"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp" />
 
 
 </RelativeLayout>

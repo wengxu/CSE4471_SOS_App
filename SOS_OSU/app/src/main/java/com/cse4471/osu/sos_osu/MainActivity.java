@@ -105,12 +105,14 @@ public class MainActivity extends AppCompatActivity {
                 finish.setVisibility(View.VISIBLE);
                 finish.setText("finish");
                 SmsManager smsManager = SmsManager.getDefault();
+                cursor = contactDbAdapter.getContacts();
                 if(cursor.moveToFirst()){
                     do{
                         String number=cursor.getString(cursor.getColumnIndex(contactDbAdapter.PHONE_NUM));
                         smsManager.sendTextMessage(number, null, "test", null, null);
                     }while(cursor.moveToNext());
                 }
+
             }
         };
 
