@@ -106,10 +106,11 @@ public class MainActivity extends AppCompatActivity {
                 finish.setText("finish");
                 SmsManager smsManager = SmsManager.getDefault();
                 cursor = contactDbAdapter.getContacts();
+                String msg = messageText.toString() + " @" + locationText.toString();
                 if(cursor.moveToFirst()){
                     do{
                         String number=cursor.getString(cursor.getColumnIndex(contactDbAdapter.PHONE_NUM));
-                        smsManager.sendTextMessage(number, null, "test", null, null);
+                        smsManager.sendTextMessage(number, null, msg, null, null);
                     }while(cursor.moveToNext());
                 }
 

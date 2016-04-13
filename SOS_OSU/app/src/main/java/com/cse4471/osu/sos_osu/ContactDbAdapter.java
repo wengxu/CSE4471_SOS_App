@@ -36,7 +36,7 @@ public class ContactDbAdapter {
     };
 
     public  static final String CREATE_TABLE_CONTACT =
-            "create table " + CONTACT_TABLE + " ("
+            "create table if not exists " + CONTACT_TABLE + " ("
                     + KEY_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + FIRST_NAME + " text, "
                     + LAST_NAME + " text, "
@@ -67,6 +67,9 @@ public class ContactDbAdapter {
         mDbHelper = new DatabaseHelper(mCtx);
         mDb = mDbHelper.getWritableDatabase();
 
+        if(!mCtx.getDatabasePath(DATABASE_NAME + ".db").exists()) {
+            mDbHelper.onCreate(mDb);
+        }
         return this;
     }
 

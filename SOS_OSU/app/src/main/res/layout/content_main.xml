@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/messageText"
-        android:text="dddd"
+        android:text="Emergency Situation. Need help!"
         android:layout_above="@+id/locationTextView"
         android:layout_centerHorizontal="true" />
 

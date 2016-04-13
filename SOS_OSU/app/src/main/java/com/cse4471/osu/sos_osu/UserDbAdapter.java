@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.io.File;
 import java.sql.SQLException;
 
 /**
@@ -31,7 +32,7 @@ public class UserDbAdapter {
     };
 
     public  static final String CREATE_TABLE_USER =
-            "create table " + USER_TABLE + " ("
+            "create table if not exists " + USER_TABLE + " ("
                     + KEY_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + MESSAGE + " text "
                     + ");";
@@ -61,7 +62,9 @@ public class UserDbAdapter {
 
         mDb = mDbHelper.getWritableDatabase();
         //mDbHelper.onUpgrade(mDb, DATABASE_VERSION, mDb.getVersion());
-
+        if(!mCtx.getDatabasePath(DATABASE_NAME + ".db").exists()) {
+            mDbHelper.onCreate(mDb);
+        }
         return this;
     }
 
