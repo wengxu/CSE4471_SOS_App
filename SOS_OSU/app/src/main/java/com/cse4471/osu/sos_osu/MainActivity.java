@@ -223,7 +223,11 @@ public class MainActivity extends AppCompatActivity {
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 // Called when a new location is found by the network location provider.
+
                 locationText.setText("Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
+
+
+
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -240,8 +244,12 @@ public class MainActivity extends AppCompatActivity {
         Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         if(loc != null) {
+
             // messageText.setText("Latitude:" + loc.getLatitude() + ", Longitude:" + loc.getLongitude());
             locationText.setText("Latitude:" + loc.getLatitude() + ", Longitude:" + loc.getLongitude());
+
+
+
         }
 
 
