@@ -37,7 +37,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        final String MESS_REGEX="[a-zA-Z0-9,.?!]*";
+        final String MESS_REGEX="[a-zA-Z0-9,.?! ]*";
         editText = (EditText) findViewById(R.id.messageText);
         confirmButton = (Button) findViewById(R.id.confirmButton);
         cancelButton = (Button) findViewById(R.id.cancelButton);
