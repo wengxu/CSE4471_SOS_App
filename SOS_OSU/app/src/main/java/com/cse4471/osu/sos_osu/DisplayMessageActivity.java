@@ -37,7 +37,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        final String MESS_REGEX="[a-zA-Z0-9,.?!]*";
         editText = (EditText) findViewById(R.id.messageText);
         confirmButton = (Button) findViewById(R.id.confirmButton);
         cancelButton = (Button) findViewById(R.id.cancelButton);
@@ -70,13 +70,18 @@ public class DisplayMessageActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!message.equals(editText.getText().toString())) {
-                    User user = new User(editText.getText().toString());
-                    userDbAdapter.updateUser(id, user.getContentValues());
-                    Toast.makeText(getApplicationContext(), "Message updated", Toast.LENGTH_SHORT).show();
+
+                if (editText.getText().toString().matches(MESS_REGEX)){
+                    if (!message.equals(editText.getText().toString())) {
+                        User user = new User(editText.getText().toString());
+                        userDbAdapter.updateUser(id, user.getContentValues());
+                        Toast.makeText(getApplicationContext(), "Message updated", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), "Invalid phone number", Toast.LENGTH_SHORT).show();
                 }
 
-                finish();
             }
         });
 
