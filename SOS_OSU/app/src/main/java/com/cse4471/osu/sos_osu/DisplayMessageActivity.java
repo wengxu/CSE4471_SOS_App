@@ -79,7 +79,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
                         finish();
                     }
                 }else{
-                    Toast.makeText(getApplicationContext(), "Invalid phone number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Invalid Message, only [a-zA-Z0-9,.!?] are allowed", Toast.LENGTH_SHORT).show();
                 }
 
             }

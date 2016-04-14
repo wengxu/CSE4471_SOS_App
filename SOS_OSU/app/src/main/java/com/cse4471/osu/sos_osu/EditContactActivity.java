@@ -32,6 +32,8 @@ public class EditContactActivity extends AppCompatActivity {
         final EditText firstNameEditText = (EditText) findViewById(R.id.firstNameEditText);
         final EditText phoneEditText = (EditText) findViewById(R.id.phoneEditText);
         final String PHONE_REGEX="(\\d|-|\\(|\\)| ){7,16}";
+        final String NAME_REGEX="[a-zA-Z ]*";
+
         Button deleteButton = (Button) findViewById(R.id.deleteButton);
         Button cancelButton = (Button) findViewById(R.id.cancelButton);
         Button saveButton = (Button) findViewById(R.id.saveButton);
@@ -82,7 +84,7 @@ public class EditContactActivity extends AppCompatActivity {
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public  void onClick(View view) {
-                    if (phoneEditText.getText().toString().matches(PHONE_REGEX)){
+                    if (phoneEditText.getText().toString().matches(PHONE_REGEX)&&firstNameEditText.getText().toString().matches(NAME_REGEX)){
                         if (!(phoneNum.equals(phoneEditText.getText().toString()) && name.equals(firstNameEditText.getText().toString()))) {
                             Contact contact = new Contact(firstNameEditText.getText().toString(), "", phoneEditText.getText().toString());
                             contactDbAdapter.insertContact(contact.getContentValues());
@@ -90,7 +92,7 @@ public class EditContactActivity extends AppCompatActivity {
                             finish();
                         }
                     }else{
-                        Toast.makeText(getApplicationContext(), "Invalid phone number", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Invalid name or phone number", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -107,7 +109,7 @@ public class EditContactActivity extends AppCompatActivity {
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (phoneEditText.getText().toString().matches(PHONE_REGEX)){
+                    if (phoneEditText.getText().toString().matches(PHONE_REGEX)&&firstNameEditText.getText().toString().matches(NAME_REGEX)){
                         if (!(phoneNum.equals(phoneEditText.getText().toString()) && name.equals(firstNameEditText.getText().toString()))) {
                             Contact contact = new Contact(firstNameEditText.getText().toString(), "", phoneEditText.getText().toString());
                             contactDbAdapter.insertContact(contact.getContentValues());
@@ -115,7 +117,7 @@ public class EditContactActivity extends AppCompatActivity {
                             finish();
                         }
                     }else{
-                        Toast.makeText(getApplicationContext(), "Invalid phone number", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Invalid name or phone number", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
