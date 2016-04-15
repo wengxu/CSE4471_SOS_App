@@ -69,7 +69,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                // use regular express to validate user input
                 if (editText.getText().toString().matches(MESS_REGEX)){
                     if (!message.equals(editText.getText().toString())) {
                         User user = new User(editText.getText().toString());

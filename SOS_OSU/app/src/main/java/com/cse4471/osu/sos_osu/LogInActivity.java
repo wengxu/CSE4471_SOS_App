@@ -29,6 +29,7 @@ public class LogInActivity extends AppCompatActivity {
         OKbutton = (Button) findViewById(R.id.OKbutton);
         cancelButton = (Button) findViewById(R.id.cancelButton);
 
+        // update password from user input, the password will be used encrypt and decrypt data.
         OKbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public  void  onClick(View view) {

@@ -84,6 +84,7 @@ public class EditContactActivity extends AppCompatActivity {
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public  void onClick(View view) {
+                    // Use regex to validate input text to prevent sql injection attacks
                     if (phoneEditText.getText().toString().matches(PHONE_REGEX)&&firstNameEditText.getText().toString().matches(NAME_REGEX)){
                         if (!(phoneNum.equals(phoneEditText.getText().toString()) && name.equals(firstNameEditText.getText().toString()))) {
                             Contact contact = new Contact(firstNameEditText.getText().toString(), "", phoneEditText.getText().toString());
