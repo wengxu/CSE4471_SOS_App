@@ -5,7 +5,7 @@
     <string name="contact">Contact</string>
     <string name="message">Message</string>
     <string name="title_activity_display_contact">Contact</string>
-    <string name="add_contact">Add From Contact</string>
+    <string name="add_contact">Add From Contacts</string>
     <string name="add_custom_contact">Add Custom Contact</string>
     <string name="save_contact">Save</string>
     <string name="title_activity_edit_contact">Edit Contact</string>
