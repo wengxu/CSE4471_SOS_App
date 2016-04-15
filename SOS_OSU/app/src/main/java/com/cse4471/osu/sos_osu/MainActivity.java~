@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             userDbAdapter.open();
         } catch (SQLException error) {
-            Log.e("mytag", "Error open userDbAdapter");
+            Log.e("mytag", "Error open userDbAdapter\n");
         }
 
 
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             contactDbAdapter.open();
         } catch (SQLException error) {
-            Log.e("mytag", "Error open contactDbAdapter");
+            Log.e("mytag", "Error open contactDbAdapter\n");
         }
         cursor = contactDbAdapter.getContacts();
 
@@ -105,12 +105,21 @@ public class MainActivity extends AppCompatActivity {
                 finish.setVisibility(View.VISIBLE);
                 finish.setText("finish");
                 SmsManager smsManager = SmsManager.getDefault();
+                cursor = contactDbAdapter.getContacts();
+<<<<<<< HEAD
+                String msg = messageText.getText().toString() + " @" + locationText.getText().toString();
+                Log.d("dd", msg);
+=======
+                String msg = messageText.getText().toString() + "@" + locationText.getText().toString();
+                Log.e("mytag", msg);
+>>>>>>> 370a0aab9d5ebddea7a249cd5a963684e2747a5d
                 if(cursor.moveToFirst()){
                     do{
                         String number=cursor.getString(cursor.getColumnIndex(contactDbAdapter.PHONE_NUM));
-                        smsManager.sendTextMessage(number, null, "test", null, null);
+                        smsManager.sendTextMessage(number, null, msg, null, null);
                     }while(cursor.moveToNext());
                 }
+
             }
         };
 
@@ -170,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         switch (id) {
 
             case R.id.contact:
-                Intent contactIntent = new Intent(getApplicationContext(), DisplayContactActivity.class);
+                Intent contactIntent = new Intent(getApplicationContext(), LogInActivity.class);
                 startActivity(contactIntent);
                 return true;
             case R.id.message:
@@ -223,11 +232,11 @@ public class MainActivity extends AppCompatActivity {
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 // Called when a new location is found by the network location provider.
-<<<<<<< HEAD
+
                 locationText.setText("Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
-=======
-                messageText.setText(messageText.getText()+"at Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
->>>>>>> fd4c6f05fac7736785894a46c479d1154a91c543
+
+
+
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -235,8 +244,9 @@ public class MainActivity extends AppCompatActivity {
 
             public void onProviderEnabled(String provider) {
             }
-
             public void onProviderDisabled(String provider) {
+
+
             }
         };
 
@@ -244,12 +254,12 @@ public class MainActivity extends AppCompatActivity {
         Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         if(loc != null) {
-<<<<<<< HEAD
+
             // messageText.setText("Latitude:" + loc.getLatitude() + ", Longitude:" + loc.getLongitude());
             locationText.setText("Latitude:" + loc.getLatitude() + ", Longitude:" + loc.getLongitude());
-=======
-            messageText.setText(messageText.getText()+"at Latitude:" + loc.getLatitude() + ", Longitude:" + loc.getLongitude());
->>>>>>> fd4c6f05fac7736785894a46c479d1154a91c543
+
+
+
         }
 
 

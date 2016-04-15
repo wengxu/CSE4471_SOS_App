@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             userDbAdapter.open();
         } catch (SQLException error) {
-            Log.e("mytag", "Error open userDbAdapter");
+            Log.e("mytag", "Error open userDbAdapter\n");
         }
 
 
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             contactDbAdapter.open();
         } catch (SQLException error) {
-            Log.e("mytag", "Error open contactDbAdapter");
+            Log.e("mytag", "Error open contactDbAdapter\n");
         }
         cursor = contactDbAdapter.getContacts();
 
@@ -106,8 +106,13 @@ public class MainActivity extends AppCompatActivity {
                 finish.setText("finish");
                 SmsManager smsManager = SmsManager.getDefault();
                 cursor = contactDbAdapter.getContacts();
-                String msg = messageText.getText().toString() + " @" + locationText.getText().toString();
-                Log.d("dd", msg);
+
+
+
+
+                String msg = messageText.getText().toString() + "@" + locationText.getText().toString();
+                Log.e("mytag", msg);
+
                 if(cursor.moveToFirst()){
                     do{
                         String number=cursor.getString(cursor.getColumnIndex(contactDbAdapter.PHONE_NUM));
@@ -239,8 +244,9 @@ public class MainActivity extends AppCompatActivity {
 
             public void onProviderEnabled(String provider) {
             }
-
             public void onProviderDisabled(String provider) {
+
+
             }
         };
 
