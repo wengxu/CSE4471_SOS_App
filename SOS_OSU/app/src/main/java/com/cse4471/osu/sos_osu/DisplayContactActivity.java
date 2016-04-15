@@ -22,6 +22,7 @@ import android.widget.Toast;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+// this class defines the dispaly contact activity used to display each contact on list.
 public class DisplayContactActivity extends AppCompatActivity {
 
     ListView listView;

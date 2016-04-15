@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-
+// this class is used to display message activity that user can update message
 public class DisplayMessageActivity extends AppCompatActivity {
     EditText editText;
     UserDbAdapter userDbAdapter;

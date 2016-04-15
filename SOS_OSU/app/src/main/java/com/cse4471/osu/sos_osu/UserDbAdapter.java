@@ -14,6 +14,7 @@ import java.sql.SQLException;
  * Created by xuweng on 3/29/16.
  */
 // this is the adapter that serves as a bridge between view and model
+// used as middleman to interact with database
 public class UserDbAdapter {
     private static final String DATABASE_NAME = "SOS_DATABASE.db";
     private static final String USER_TABLE = "USER_TABLE";

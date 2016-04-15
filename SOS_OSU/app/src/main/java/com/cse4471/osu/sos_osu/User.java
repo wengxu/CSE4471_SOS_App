@@ -7,6 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by xuweng on 3/28/16.
  */
+// defines user class that packages user related info.
 public class User {
     int mId;
     String mMessage;

@@ -16,6 +16,7 @@ import java.sql.SQLException;
  * Created by xuweng on 3/29/16.
  */
 // this is the adapter that serves as a bridge between view and model
+// it is used as middleman to access database.
 public class ContactDbAdapter {
     private static final String DATABASE_NAME = "SOS_DATABASE.db";
     private static final String CONTACT_TABLE = "CONTACT_TABLE";

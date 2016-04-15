@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.sql.SQLException;
-
+// edit contact activity that enable user to edit contact
 public class EditContactActivity extends AppCompatActivity {
     ContactDbAdapter contactDbAdapter;
     Cursor cursor;

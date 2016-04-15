@@ -7,6 +7,8 @@ import java.util.ArrayList;
 /**
  * Created by xuweng on 3/28/16.
  */
+
+/* thiis class defines contact that the user intends to send text to */
 public class Contact {
     int mId;
     String mFirstName;
