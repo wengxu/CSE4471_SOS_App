@@ -1,5 +1,9 @@
 # CSE4471_SOS_App
 
+### Run the app: First open the app in Android Studio. then run the app on phone (recommended) or simulator
+### using the same encryption key will get the same outcome. A different encryption key will generate encrypted message.
+### note for the encryption feature, you might need to delete all existing contacts before encrypt data into the database
+
 ## useful websites
 ### Android Fundamentals (http://developer.android.com/guide/components/fundamentals.html)
 ### SMS Manager in Android (http://developer.android.com/reference/android/telephony/SmsManager.html)
