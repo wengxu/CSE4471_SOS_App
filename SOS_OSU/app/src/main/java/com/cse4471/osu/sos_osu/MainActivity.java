@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         final Button sos = (Button) findViewById(R.id.redbutton);
         final Button finish = (Button) findViewById(R.id.greenbutton);
 
-        final CountDownTimer timer = new CountDownTimer(5999, 100) {
+        final CountDownTimer timer = new CountDownTimer(3999, 100) {
             public void onTick(long millisUntilFinished) {
                 sos.setText("" + ((int) (millisUntilFinished) / 1000));
             }
@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         sos.setVisibility(View.VISIBLE);
                         finish.setVisibility(View.GONE);
+                        sos.callOnClick();
                     }
 
                 }

@@ -37,9 +37,8 @@
 
         android:visibility="gone"
 
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp" />
+        android:layout_above="@+id/messageText"
+        android:layout_centerHorizontal="true" /> />
 
 
     <EditText
