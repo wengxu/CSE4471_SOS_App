@@ -76,10 +76,11 @@ public class DisplayMessageActivity extends AppCompatActivity {
                         User user = new User(editText.getText().toString());
                         userDbAdapter.updateUser(id, user.getContentValues());
                         Toast.makeText(getApplicationContext(), "Message updated", Toast.LENGTH_SHORT).show();
-                        finish();
+
                     }
+                    finish();
                 }else{
-                    Toast.makeText(getApplicationContext(), "Invalid Message, only [a-zA-Z0-9,.!?] are allowed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Invalid Message, only [a-zA-Z0-9,.!? ] are allowed", Toast.LENGTH_SHORT).show();
                 }
 
             }
