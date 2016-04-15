@@ -106,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
                 finish.setText("finish");
                 SmsManager smsManager = SmsManager.getDefault();
                 cursor = contactDbAdapter.getContacts();
-                String msg = messageText.toString() + " @" + locationText.toString();
+                String msg = messageText.getText().toString() + " @" + locationText.getText().toString();
+                Log.d("dd", msg);
                 if(cursor.moveToFirst()){
                     do{
                         String number=cursor.getString(cursor.getColumnIndex(contactDbAdapter.PHONE_NUM));
@@ -173,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         switch (id) {
 
             case R.id.contact:
-                Intent contactIntent = new Intent(getApplicationContext(), DisplayContactActivity.class);
+                Intent contactIntent = new Intent(getApplicationContext(), LogInActivity.class);
                 startActivity(contactIntent);
                 return true;
             case R.id.message:

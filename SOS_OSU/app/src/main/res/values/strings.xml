@@ -10,4 +10,5 @@
     <string name="save_contact">Save</string>
     <string name="title_activity_edit_contact">Edit Contact</string>
     <string name="title_activity_display_message">Message</string>
+    <string name="title_activity_log_in">Encyption</string>
 </resources>

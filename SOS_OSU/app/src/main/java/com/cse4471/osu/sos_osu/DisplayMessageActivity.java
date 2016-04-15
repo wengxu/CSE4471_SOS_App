@@ -62,7 +62,6 @@ public class DisplayMessageActivity extends AppCompatActivity {
         if (cursor.moveToFirst()) {
             message = cursor.getString(cursor.getColumnIndex(userDbAdapter.MESSAGE));
             id = cursor.getInt(cursor.getColumnIndex(userDbAdapter.KEY_ROWID));
-            Log.d("id is ", String.valueOf(id));
         }
 
         editText.setText(message);

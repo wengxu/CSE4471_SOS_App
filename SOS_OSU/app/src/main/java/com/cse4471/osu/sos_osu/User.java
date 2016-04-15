@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class User {
     int mId;
     String mMessage;
+    String mCode;
 
     // constructors
     public User() {
@@ -17,7 +18,9 @@ public class User {
     }
 
     public User(String message) {
+
         this.mMessage = message;
+        this.mCode = "ohio";
     }
 
     public ContentValues getContentValues() {

@@ -160,7 +160,7 @@ public class DisplayContactActivity extends AppCompatActivity {
                     if (pickCursor.moveToFirst()) {
                         Log.d(ContactsContract.CommonDataKinds.Phone.DATA1, pickCursor.getString(pickCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA1)));
                         Contact newContact = new Contact(pickCursor.getString(pickCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)),
-                                null, pickCursor.getString(pickCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA1)));
+                                "", pickCursor.getString(pickCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA1)));
                         contactDbAdapter.insertContact(newContact.getContentValues());
                         /*
                         for (int i = 0; i < pickCursor.getColumnCount(); i++) {

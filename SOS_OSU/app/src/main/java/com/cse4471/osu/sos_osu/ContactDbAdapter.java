@@ -3,8 +3,10 @@ package com.cse4471.osu.sos_osu;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.security.Key;
 import java.sql.RowId;
@@ -20,6 +22,7 @@ public class ContactDbAdapter {
     private static final int DATABASE_VERSION = 200;
     private final Context mCtx;
     public static String TAG = ContactDbAdapter.class.getSimpleName();
+    public static int password = 1;
 
     private DatabaseHelper mDbHelper;
     SQLiteDatabase mDb;
@@ -88,12 +91,14 @@ public class ContactDbAdapter {
 
     // adding deleting and updating data
     public  long insertContact(ContentValues initialValues) {
-        return mDb.insertWithOnConflict(CONTACT_TABLE, null, initialValues, SQLiteDatabase.CONFLICT_IGNORE);
+        //return mDb.insertWithOnConflict(CONTACT_TABLE, null, initialValues, SQLiteDatabase.CONFLICT_IGNORE);
+        return mDb.insertWithOnConflict(CONTACT_TABLE, null, encodeContentValues(initialValues), SQLiteDatabase.CONFLICT_IGNORE);
     }
 
     public boolean updateContact(int id, ContentValues newValues) {
         String[] selectionArgs = {String.valueOf(id)};
-        return mDb.update(CONTACT_TABLE, newValues, KEY_ROWID + "=?", selectionArgs)>0;
+        //return mDb.update(CONTACT_TABLE, newValues, KEY_ROWID + "=?", selectionArgs)>0;
+        return mDb.update(CONTACT_TABLE, encodeContentValues(newValues), KEY_ROWID + "=?", selectionArgs)>0;
     }
 
     public boolean deleteContact(int id) {
@@ -102,11 +107,32 @@ public class ContactDbAdapter {
     }
 
     public Cursor getContactById(int id) {
-        return mDb.query(CONTACT_TABLE, CONTACT_FIELDS, KEY_ROWID + "=?",new String[] { String.valueOf(id) }, null, null, null);
+        //return mDb.query(CONTACT_TABLE, CONTACT_FIELDS, KEY_ROWID + "=?",new String[] { String.valueOf(id) }, null, null, null);
+        MatrixCursor matrixCursor= new MatrixCursor(CONTACT_FIELDS);
+        Cursor dbCursor =mDb.query(CONTACT_TABLE, CONTACT_FIELDS, KEY_ROWID + "=?",new String[] { String.valueOf(id) }, null, null, null);
+        if (dbCursor.moveToFirst()) {
+            Contact contact = getContactFromCursor(dbCursor);
+            int key_rowid =  Integer.parseInt(dbCursor.getString(dbCursor.getColumnIndex(KEY_ROWID))) ;
+            matrixCursor.addRow(new Object[] {key_rowid, contact.mFirstName,  contact.mLastName, contact.mPhoneNum});
+        }
+        return matrixCursor;
     }
     
     public Cursor getContacts() {
-        return mDb.query(CONTACT_TABLE, CONTACT_FIELDS, null, null, null, null, null);
+        //return mDb.query(CONTACT_TABLE, CONTACT_FIELDS, null, null, null, null, null);
+
+        MatrixCursor matrixCursor= new MatrixCursor(CONTACT_FIELDS);
+        // startManagingCursor(matrixCursor);
+        Cursor dbCursor = mDb.query(CONTACT_TABLE, CONTACT_FIELDS, null, null, null, null, null);
+        if (dbCursor.moveToFirst()) {
+            do {
+                Contact contact = getContactFromCursor(dbCursor);
+                int key_rowid =  Integer.parseInt(dbCursor.getString(dbCursor.getColumnIndex(KEY_ROWID))) ;
+                matrixCursor.addRow(new Object[] {key_rowid, contact.mFirstName,  contact.mLastName, contact.mPhoneNum});
+            } while (dbCursor.moveToNext());
+        }
+
+        return matrixCursor;
     }
 
     public  int getContactSize() {
@@ -116,43 +142,76 @@ public class ContactDbAdapter {
 
     // insert with encodeing
     public  long insertContactWithEncoding(ContentValues initialValues) {
-        return mDb.insertWithOnConflict(CONTACT_TABLE, null, initialValues, SQLiteDatabase.CONFLICT_IGNORE);
+        return mDb.insertWithOnConflict(CONTACT_TABLE, null, encodeContentValues(initialValues), SQLiteDatabase.CONFLICT_IGNORE);
+    }
+
+    // get content values from cursor
+    public  ContentValues getContentValuesfromCursor(Cursor cursor) {
+        ContentValues contentValues = new ContentValues();
+        String name = cursor.getString(cursor.getColumnIndex(FIRST_NAME));
+        String phoneNum = cursor.getString(cursor.getColumnIndex(PHONE_NUM));
+        contentValues.put(FIRST_NAME, shiftString(name, 0-password) );
+        contentValues.put(LAST_NAME, "" );
+        contentValues.put(PHONE_NUM, shiftString(phoneNum , 0-password));
+        return contentValues;
     }
 
 
-    public  static Contact getContactFromCursor(Cursor cursor) {
+    public   Contact getContactFromCursor(Cursor cursor) {
         Contact contact = new Contact();
         contact.mFirstName = cursor.getString(cursor.getColumnIndex(FIRST_NAME));
         contact.mLastName = cursor.getString(cursor.getColumnIndex(LAST_NAME));
         contact.mPhoneNum = cursor.getString(cursor.getColumnIndex(PHONE_NUM));
+        // decode
+        contact.mFirstName = shiftString(contact.mFirstName, 0-password);
+        contact.mPhoneNum = shiftString(contact.mPhoneNum, 0-password);
         return contact;
     }
 
-    public ContentValues encodeContentValues(ContentValues contentValues, int key) {
+    public ContentValues encodeContentValues(ContentValues contentValues) {
         ContentValues encodedContentValues = new ContentValues();
-
+        for (String keypart : contentValues.keySet()) {
+            Log.d("keypart is " , keypart);
+            encodedContentValues.put(keypart, shiftString(contentValues.getAsString(keypart), password));
+        }
         return encodedContentValues;
     }
 
-    // this function shifts the char by
-    public char shiftedChar(char c, int shift) {
+    // shift the string by shift amount
+    public  String shiftString(String s, int shift) {
+        String result = "";
+        for (int i = 0; i < s.length(); i++) {
+            result += shiftChar(s.charAt(i), shift);
+        }
+        return  result;
+    }
+
+    // this function shifts the char by shift amount
+    public char shiftChar(char c, int shift) {
         // check char Ansi
-        int ansi = (int) c;
+        int ansiInt = (int) c;
         char result = c;
         // if numbers
-        if (ansi >= 48 && ansi <= 59) {
-
+        if (ansiInt >= 48 && ansiInt <= 57) {
+            result = (char) modOperation(ansiInt, 48, 57, shift);
         }
         // if A-Z
-        else if (ansi >= 65 && ansi <= 90) {
-
+        else if (ansiInt >= 65 && ansiInt <= 90) {
+            result = (char) modOperation(ansiInt, 65, 90, shift);
         }
         // if a-z
-        else if (ansi >= 97 && ansi <= 122) {
-
+        else if (ansiInt >= 97 && ansiInt <= 122) {
+            result = (char) modOperation(ansiInt, 97, 122, shift);
         }
 
         return result;
+    }
+    // this function use modulo to move numbers within range
+    public int modOperation(int current, int start, int end, int shift) {
+        int baseCurrent = current - start;
+        int mod = end  - start + 1;
+        int baseResult = (((baseCurrent + shift) % mod ) + mod ) % mod;
+        return baseResult + start;
     }
 
 
