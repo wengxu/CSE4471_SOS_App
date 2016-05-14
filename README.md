@@ -1,19 +1,11 @@
 # CSE4471_SOS_App
-### github link: https://github.com/wengxu/CSE4471_SOS_App/
-### Run the app: First open the app in Android Studio. then run the app on phone (recommended) or simulator
+### Run the app: 
+#### option1-First open the app in Android Studio. then run the app on phone (recommended) or simulator
+#### option2-use the app_final.apk to install the app to your andriod phone
+### check the project report for app detail if you don't want to test the project
 ### using the same encryption key will get the same outcome. A different encryption key will generate encrypted message.
 ### note for the encryption feature, you might need to delete all existing contacts before encrypt data into the database
 
-## useful websites
-### Android Fundamentals (http://developer.android.com/guide/components/fundamentals.html)
-### SMS Manager in Android (http://developer.android.com/reference/android/telephony/SmsManager.html)
-### Android App Tutorial (https://www.coursera.org/courses?query=android%20app&languages=en)
-#### looks like we can use this method to send text 
-##### void sendTextMessage(String destinationAddress, String scAddress, String text, PendingIntent sentIntent, PendingIntent deliveryIntent)
-##### // Send a text based SMS.
 
-## Calendar 
-### Wed 3/23 through Fri 4/15: Final Project Presentation [5 pts.] 
-#### Each group provides a 20-minutes presentation of project results and demonstration, each team member providing 4 - 5 minutes of content. In-class evaluation by classmates.
-### Fri 4/15: Final Project Report [15 pts.]
-#### Each team provides a 4 page (10 point Times, Arial or Helvetica font, single- spaced, 1-inch margins) summarizing the goals, results and observations of their project. One report per team.
+
+
